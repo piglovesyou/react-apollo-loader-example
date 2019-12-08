@@ -1022,6 +1022,15 @@
     "@graphql-codegen/visitor-plugin-common" "1.8.3"
     tslib "1.10.0"
 
+"@graphql-codegen/typescript-react-apollo@^1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-react-apollo/-/typescript-react-apollo-1.9.1.tgz#87c5a0c5b6c69cc380d4f36d70d592d44744a953"
+  integrity sha512-Drn3fhw3P93r3OxdrZiVofl5GLT2mQ4VhB0kk1Sd4NFq8zvbtgdksfZoDyoLgElLjI/iNJmdseFZZdGlp2TeGw==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "1.9.1"
+    "@graphql-codegen/visitor-plugin-common" "1.9.1"
+    tslib "1.10.0"
+
 "@graphql-codegen/typescript@1.9.1":
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.9.1.tgz#9bbc7fdd66885b768f2d6d3d926d6375f71de4b8"
@@ -6659,7 +6668,7 @@ graphql-upload@^8.0.2:
     http-errors "^1.7.3"
     object-path "^0.11.4"
 
-graphql@^14.5, graphql@^14.5.3:
+graphql@^14.5, graphql@^14.5.3, graphql@^14.5.8:
   version "14.5.8"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.8.tgz#504f3d3114cb9a0a3f359bbbcf38d9e5bf6a6b3c"
   integrity sha512-MMwmi0zlVLQKLdGiMfWkgQD7dY/TUKt4L+zgJ/aR0Howebod3aNgP5JkgvAULiR2HPVZaP2VEElqtdidHweLkg==
@@ -11410,6 +11419,19 @@ rc@^1.2.7, rc@^1.2.8:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
+
+react-apollo-loader@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-apollo-loader/-/react-apollo-loader-0.1.2.tgz#ae4aa58d652f3d5e0857d3f72d8acdff7742b54b"
+  integrity sha512-jUhIovUw1LlPY0s2GqBkR3vF5/54hdRABOMWXm6bS4Vyn3gTHjFmlBjyYFkGqy40ti8emyAVxz5el7GQWNct5A==
+  dependencies:
+    "@graphql-codegen/cli" "^1.9.1"
+    "@graphql-codegen/typescript-operations" "^1.9.1"
+    "@graphql-codegen/typescript-react-apollo" "^1.9.1"
+    graphql "^14.5.8"
+    loader-utils "^1.2.3"
+    lodash.merge "^4.6.2"
+    mkdirp "^0.5.1"
 
 react-apollo@^3.1.3:
   version "3.1.3"

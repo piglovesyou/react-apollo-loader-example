@@ -1,0 +1,139 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: RootQuery
+  mutation: Mutation
+}
+
+"A user stored in the local database"
+type DatabaseUser {
+  claims: [DatabaseUserClaim]
+  createdAt: String
+  email: String
+  emailConfirmed: Boolean
+  id: String
+  logins: [DatabaseUserLogin]
+  profile: DatabaseUserProfile
+  updatedAt: String
+}
+
+type DatabaseUserClaim {
+  createdAt: String
+  id: Int
+  type: String
+  updatedAt: String
+  userId: String
+  value: String
+}
+
+type DatabaseUserLogin {
+  createdAt: String
+  key: String
+  name: String
+  updatedAt: String
+  userId: String
+}
+
+type DatabaseUserProfile {
+  createdAt: String
+  displayName: String
+  gender: String
+  location: String
+  picture: String
+  updatedAt: String
+  userId: String
+  website: String
+}
+
+"""
+# React-Starter-Kit Mutating API
+### This GraphQL schema was built with [Apollo GraphQL-Tools](https://github.com/apollographql/graphql-tools)
+_Build, mock, and stitch a GraphQL schema using the schema language_
+
+**[Schema Language Cheet Sheet](https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png)**
+
+1. Use the GraphQL schema language to [generate a schema](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) with full support for resolvers, interfaces, unions, and custom scalars. The schema produced is completely compatible with [GraphQL.js](https://github.com/graphql/graphql-js).
+2. [Mock your GraphQL API](https://www.apollographql.com/docs/graphql-tools/mocking.html) with fine-grained per-type mocking
+3. Automatically [stitch multiple schemas together](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html) into one larger API
+"""
+type Mutation {
+  "Creates a new user and profile in the local database"
+  databaseCreateUser(
+    #The email of the new user, this email must be unique in the database
+    email: String!
+    #User profile information for creating a new local database user account
+    profile: UserProfile!
+  ): DatabaseUser
+  updateNetworkStatus(isConnected: Boolean): NetworkStatus!
+}
+
+type NetworkStatus {
+  isConnected: Boolean!
+}
+
+"A single news article from [https://reactjsnews.com/](https://reactjsnews.com/)"
+type ReactJSNewsItem {
+  "The name of the news item's author"
+  author: String!
+  "News article in HTML format"
+  content: String!
+  "A direct link URL to this news item on reactjsnews.com"
+  link: String!
+  "The date this news item was published"
+  pubDate: String!
+  "The news item's title"
+  title: String!
+}
+
+"""
+# React-Starter-Kit Querying API
+### This GraphQL schema was built with [Apollo GraphQL-Tools](https://github.com/apollographql/graphql-tools)
+_Build, mock, and stitch a GraphQL schema using the schema language_
+
+**[Schema Language Cheet Sheet](https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png)**
+
+1. Use the GraphQL schema language to [generate a schema](https://www.apollographql.com/docs/graphql-tools/generate-schema.html) with full support for resolvers, interfaces, unions, and custom scalars. The schema produced is completely compatible with [GraphQL.js](https://github.com/graphql/graphql-js).
+2. [Mock your GraphQL API](https://www.apollographql.com/docs/graphql-tools/mocking.html) with fine-grained per-type mocking
+3. Automatically [stitch multiple schemas together](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html) into one larger API
+"""
+type RootQuery {
+  "Retrieves all users stored in the local database"
+  databaseGetAllUsers: [DatabaseUser]
+  "Retrieves information about the currently logged-in user"
+  databaseGetLoggedInUser: DatabaseUser
+  "Retrieves a single user from the local database"
+  databaseGetUser(
+    #The user's email address
+    email: String!
+  ): DatabaseUser
+  networkStatus: NetworkStatus!
+  "Retrieves the latest ReactJS News"
+  reactjsGetAllNews: [ReactJSNewsItem!]!
+  user: User
+}
+
+type User {
+  id: String!
+}
+
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
+}
+
+"User profile data for creating a new local database user account"
+input UserProfile {
+  "A display name for the logged-in user"
+  displayName: String!
+  "The user's gender"
+  gender: String
+  "The user's location"
+  location: String
+  "A profile picture URL"
+  picture: String
+  "A website URL"
+  website: String
+}
+
+"Timestamp custom scalar type"
+scalar Timestamp

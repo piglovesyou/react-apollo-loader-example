@@ -42,6 +42,47 @@ const staticAssetName = isDebug
 // client-side (client.js) and server-side (server.js) bundles
 // -----------------------------------------------------------------------------
 
+const babelLoaderOptions = {
+  // https://github.com/babel/babel-loader#options
+  cacheDirectory: isDebug,
+
+  // https://babeljs.io/docs/usage/options/
+  babelrc: false,
+  configFile: false,
+  presets: [
+    // A Babel preset that can automatically determine the Babel plugins and polyfills
+    // https://github.com/babel/babel-preset-env
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          browsers: pkg.browserslist,
+        },
+        forceAllTransforms: !isDebug, // for UglifyJS
+        modules: false,
+        useBuiltIns: false,
+        debug: false,
+      },
+    ],
+    // JSX
+    // https://github.com/babel/babel/tree/master/packages/babel-preset-react
+    ['@babel/preset-react', { development: isDebug }],
+
+    // TypeScript
+    '@babel/preset-typescript',
+  ],
+  plugins: [
+    // Experimental ECMAScript proposals
+    '@babel/plugin-proposal-class-properties',
+    '@babel/plugin-syntax-dynamic-import',
+    // Treat React JSX elements as value types and hoist them to the highest scope
+    // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
+    ...(isDebug ? [] : ['@babel/transform-react-constant-elements']),
+    // Replaces the React.createElement function with one that is more optimized for production
+    // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-inline-elements
+    ...(isDebug ? [] : ['@babel/transform-react-inline-elements']),
+  ],
+};
 const config = {
   context: ROOT_DIR,
 
@@ -70,54 +111,26 @@ const config = {
         test: reScript,
         include: [SRC_DIR, resolvePath('tools')],
         loader: 'babel-loader',
-        options: {
-          // https://github.com/babel/babel-loader#options
-          cacheDirectory: isDebug,
-
-          // https://babeljs.io/docs/usage/options/
-          babelrc: false,
-          configFile: false,
-          presets: [
-            // A Babel preset that can automatically determine the Babel plugins and polyfills
-            // https://github.com/babel/babel-preset-env
-            [
-              '@babel/preset-env',
-              {
-                targets: {
-                  browsers: pkg.browserslist,
-                },
-                forceAllTransforms: !isDebug, // for UglifyJS
-                modules: false,
-                useBuiltIns: false,
-                debug: false,
-              },
-            ],
-            // JSX
-            // https://github.com/babel/babel/tree/master/packages/babel-preset-react
-            ['@babel/preset-react', { development: isDebug }],
-
-            // TypeScript
-            '@babel/preset-typescript',
-          ],
-          plugins: [
-            // Experimental ECMAScript proposals
-            '@babel/plugin-proposal-class-properties',
-            '@babel/plugin-syntax-dynamic-import',
-            // Treat React JSX elements as value types and hoist them to the highest scope
-            // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
-            ...(isDebug ? [] : ['@babel/transform-react-constant-elements']),
-            // Replaces the React.createElement function with one that is more optimized for production
-            // https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-inline-elements
-            ...(isDebug ? [] : ['@babel/transform-react-inline-elements']),
-          ],
-        },
+        options: babelLoaderOptions,
       },
 
       // Rules for GraphQL
       {
         test: reGraphql,
+        include: [resolvePath('src/routes')],
         exclude: /node_modules/,
-        loader: 'graphql-tag/loader',
+        use: [
+          {
+            loader: 'babel-loader',
+            options: babelLoaderOptions,
+          },
+          {
+            loader: 'react-apollo-loader',
+            options: {
+              schema: resolvePath('schema.graphql'),
+            },
+          },
+        ],
       },
 
       // Rules for Style Sheets

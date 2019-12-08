@@ -10,29 +10,24 @@
 import React from 'react';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import s from './Home.css';
-import { withHomeNews } from '../../__generated__/dataBinders';
+import { useHomeNewsQuery } from './news.graphql';
 
 type Props = {};
 
-const Home = withHomeNews<Props>()(props => {
+const Home = (_: Props) => {
+  const { data, loading } = useHomeNewsQuery();
   useStyles(s);
-
-  const {
-    loading,
-    reactjsGetAllNews,
-    networkStatus: { isConnected },
-  } = props.data!;
 
   return (
     <div className={s.root}>
       <div className={s.container}>
         <p className={s.networkStatusMessage}>
-          {isConnected ? 'Online' : 'Offline'}
+          {data && data.networkStatus.isConnected ? 'Online' : 'Offline'}
         </p>
         <h1>React.js News</h1>
-        {loading || !reactjsGetAllNews
+        {loading || !data || !data.reactjsGetAllNews
           ? 'Loading...'
-          : reactjsGetAllNews.map(item => (
+          : data.reactjsGetAllNews.map(item => (
               <article key={item.link} className={s.newsItem}>
                 <h1 className={s.newsTitle}>
                   <a href={item.link}>{item.title}</a>
@@ -47,6 +42,6 @@ const Home = withHomeNews<Props>()(props => {
       </div>
     </div>
   );
-});
+};
 
 export default Home;
