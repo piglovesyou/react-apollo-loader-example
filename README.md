@@ -5,11 +5,13 @@ This is an example project that utilizes **[react-apollo-loader](https://github.
 Run these commands
 
 ```bash
+git clone git@github.com:piglovesyou/react-apollo-loader-example.git
+cd react-apollo-loader-example
 yarn install
 yarn start
 ```
 
-and check how the data binding configured.
+and check the source code of how the data binding configured.
 
 * [Loading data binders from `*.graphql`](https://github.com/piglovesyou/react-apollo-loader-example/blob/master/src/routes/home/Home.tsx#L13)
 * [Configuring react-apollo-loader in webpack](https://github.com/piglovesyou/react-apollo-loader-example/blob/master/tools/webpack.config.ts#L118-L134) 
