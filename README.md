@@ -1,3 +1,9 @@
+# Please use [graphql-let](https://github.com/piglovesyou/graphql-let) instead.
+
+This repository has been archived.
+
+------
+
 # react-apollo-loader Example
 
 This is an example project that utilizes **[react-apollo-loader](https://github.com/piglovesyou/react-apollo-loader#readme)**.
